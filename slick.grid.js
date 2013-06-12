@@ -84,7 +84,8 @@ if (typeof Slick === "undefined") {
       dataItemColumnValueExtractor: null,
       fullWidthRows: false,
       multiColumnSort: false,
-      defaultFormatter: defaultFormatter
+      defaultFormatter: defaultFormatter,
+      disableScrollbar: false
     };
 
     var columnDefaults = {
@@ -226,7 +227,7 @@ if (typeof Slick === "undefined") {
       }
 
       $viewport = $("<div class='slick-viewport' style='width:100%;overflow:auto;outline:0;position:relative;;'>").appendTo($container);
-      $viewport.css("overflow-y", options.autoHeight ? "hidden" : "auto");
+      $viewport.css("overflow-y", options.autoHeight || options.disableScrollbar ? "hidden" : "auto");
 
       $canvas = $("<div class='grid-canvas' />").appendTo($viewport);
 
@@ -334,7 +335,7 @@ if (typeof Slick === "undefined") {
     function measureScrollbar() {
       var $c = $("<div style='position:absolute; top:-10000px; left:-10000px; width:100px; height:100px; overflow:scroll;'></div>").appendTo("body");
       var dim = {
-        width: $c.width() - $c[0].clientWidth,
+        width: options.disableScrollbar ? 1 : $c.width() - $c[0].clientWidth,
         height: $c.height() - $c[0].clientHeight
       };
       $c.remove();
@@ -1123,7 +1124,7 @@ if (typeof Slick === "undefined") {
 
       options = $.extend(options, args);
 
-      $viewport.css("overflow-y", options.autoHeight ? "hidden" : "auto");
+      $viewport.css("overflow-y", options.autoHeight || options.disableScrollbar ? "hidden" : "auto");
       render();
     }
 
